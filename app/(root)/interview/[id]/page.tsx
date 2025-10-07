@@ -31,10 +31,11 @@ const Page = async ({ params }: RouteParams) => {
                    interviewId={id}
                    type="interview"
                    questions={interview.questions}
-
                    />
 
         </>
     )
 }
+
+
 export default Page
