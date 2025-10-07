@@ -59,10 +59,24 @@ const Agent = ({userName, userId, type, questions}:AgentProps) => {
 
     }, [])
 
-    useEffect(() => {
-        if(callStatus === CallStatus.FINISHED) router.push('/');
+    // useEffect(() => {
+    //     if(callStatus === CallStatus.FINISHED) router.push('/');
+    //
+    // }, [messages, callStatus, type, userId, router]);
 
-    }, [messages, callStatus, type, userId]);
+
+    useEffect(() => {
+        if(callStatus === CallStatus.FINISHED && messages.length > 0) {
+            // Save messages or do something with them
+            console.log('Call finished with messages:', messages);
+            // Only redirect if NOT on home page
+            if (window.location.pathname !== '/') {
+                router.push('/');
+            }
+        }
+
+    }, [messages, callStatus, type, userId, router]);
+
 
     // const handleCall = async () => {
     //     setCallStatus(CallStatus.CONNECTING);

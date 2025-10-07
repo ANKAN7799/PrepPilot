@@ -4,8 +4,26 @@ import Image from "next/image";
 import Link from "next/link";
 import {dummyInterviews} from "@/constants";
 import InterviewCard from "@/constants/InterviewCard";
+import {getCurrentUser, getInterviewsByUserId, getLatestInterviews} from "@/lib/actions/auth.action";
 
-const Page = () => {
+const Page = async () => {
+    const user = await getCurrentUser();
+
+
+    // The below function calling style is called as " Parallel Calling/ Parallel data fetching ", it is being used to avoid the similiar type of function calling clashes of line no - 20, 21 of this file
+    const [ userInterviews, latestInterviews] = await Promise.all([
+        await getInterviewsByUserId(user?.id!),
+        await getLatestInterviews({ userId: user?.id! })
+    ])
+
+    // The just below lines generally opposite to each other and will result into the function calling clashes, to avoid that "Promise.all([])" is used
+
+    // const userInterviews = await getInterviewsByUserId(user?.id!);
+    // const latestInterviews = await getLatestInterviews({ userId: user?.id! });
+
+    const hasPastInterviews = userInterviews?.length > 0;
+    const hasUpcomingInterviews = latestInterviews?.length > 0;
+
     return (
         <>
             <section className="card-cta">
@@ -25,10 +43,12 @@ const Page = () => {
                 <h2>Your Interviews</h2>
 
                 <div className="interviews-section">
-                    {dummyInterviews.map((interview) => (
-                        <InterviewCard {...interview} key={interview.id} />
-                    ))}
-                    {/*<p>You haven&apos;t taken any Interview yet</p>*/}
+                    {hasPastInterviews ? (
+                        userInterviews?.map((interview) => (
+                            <InterviewCard {...interview} key={interview.id} />
+                        ))) : (
+                        <p>You haven&apos;t taken any Interview yet</p>
+                    )}
 
                 </div>
             </section>
@@ -36,9 +56,12 @@ const Page = () => {
             <section className="flex flex-col gap-6 mt-8">
                 <h2>Take an Interview</h2>
                 <div className="interviews-section">
-                    {dummyInterviews.map((interview) => (
-                        <InterviewCard {...interview} key={interview.id} />
-                    ))}
+                    {hasUpcomingInterviews ? (
+                        latestInterviews?.map((interview) => (
+                            <InterviewCard {...interview} key={interview.id} />
+                        ))) : (
+                        <p> There are no new Interview available </p>
+                    )}
                 </div>
 
             </section>
