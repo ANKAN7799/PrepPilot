@@ -105,32 +105,83 @@ const Page = async ({ params }: PageProps) => {
             {/* Interview Breakdown */}
             <div className="flex flex-col gap-4">
                 <h2>Breakdown of the Interview:</h2>
-                {feedback?.categoryScores?.map((category, index) => (
-                    <div key={index}>
-                        <p className="font-bold">
-                            {index + 1}. {category.name} ({category.score}/100)
-                        </p>
-                        <p>{category.comment}</p>
-                    </div>
-                ))}
+
+                {/*Line 108-116 - Replace this: Edit by AK*/}
+
+                {/*{feedback?.categoryScores?.map((category, index) => (*/}
+                {/*    <div key={index}>*/}
+                {/*        <p className="font-bold">*/}
+                {/*            {index + 1}. {category.name} ({category.score}/100)*/}
+                {/*        </p>*/}
+                {/*        <p>{category.comment}</p>*/}
+                {/*    </div>*/}
+                {/*))}*/}
+
+                {/*With this: Edit by AK*/}
+
+                {feedback?.categoryScores && Array.isArray(feedback.categoryScores) && feedback.categoryScores.length > 0 ? (
+                    feedback.categoryScores.map((category, index) => (
+                        <div key={index}>
+                            <p className="font-bold">
+                                {index + 1}. {category.name} ({category.score}/100)
+                            </p>
+                            <p>{category.comment}</p>
+                        </div>
+                    ))
+                ) : (
+                    <p className="text-gray-500">No category scores available</p>
+                )}
+
             </div>
 
             <div className="flex flex-col gap-3">
                 <h3>Strengths</h3>
-                <ul>
-                    {feedback?.strengths?.map((strength, index) => (
-                        <li key={index}>{strength}</li>
-                    ))}
-                </ul>
+
+                {/*Replace this: Edit by AK*/}
+                {/*<ul>*/}
+                {/*    {feedback?.strengths?.map((strength, index) => (*/}
+                {/*        <li key={index}>{strength}</li>*/}
+                {/*    ))}*/}
+                {/*</ul>*/}
+
+                {/*With this: Edit by AK*/}
+
+                {feedback?.strengths && Array.isArray(feedback.strengths) && feedback.strengths.length > 0 ? (
+                    <ul>
+                        {feedback.strengths.map((strength, index) => (
+                            <li key={index}>{strength}</li>
+                        ))}
+                    </ul>
+                ) : (
+                    <p className="text-gray-500">No strengths recorded</p>
+                )}
+
+
             </div>
 
             <div className="flex flex-col gap-3">
                 <h3>Areas for Improvement</h3>
-                <ul>
-                    {feedback?.areasForImprovement?.map((area, index) => (
-                        <li key={index}>{area}</li>
-                    ))}
-                </ul>
+
+                {/*Replace this: Edit by AK*/}
+                {/*<ul>*/}
+                {/*    {feedback?.areasForImprovement?.map((area, index) => (*/}
+                {/*        <li key={index}>{area}</li>*/}
+                {/*    ))}*/}
+                {/*</ul>*/}
+
+                {/*With this: Edit by AK*/}
+
+                {feedback?.areasForImprovement && Array.isArray(feedback.areasForImprovement) && feedback.areasForImprovement.length > 0 ? (
+                    <ul>
+                        {feedback.areasForImprovement.map((area, index) => (
+                            <li key={index}>{area}</li>
+                        ))}
+                    </ul>
+                ) : (
+                    <p className="text-gray-500">No areas for improvement recorded</p>
+                )}
+
+
             </div>
 
             <div className="buttons">

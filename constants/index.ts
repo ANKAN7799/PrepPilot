@@ -156,40 +156,54 @@ End the conversation on a polite and positive note.
   },
 };
 
-export const feedbackSchema = z.object({
-  totalScore: z.number(),
-  categoryScores: z.tuple([
-    z.object({
-      name: z.literal("Communication Skills"),
-      score: z.number(),
-      comment: z.string(),
-    }),
-    z.object({
-      name: z.literal("Technical Knowledge"),
-      score: z.number(),
-      comment: z.string(),
-    }),
-    z.object({
-      name: z.literal("Problem Solving"),
-      score: z.number(),
-      comment: z.string(),
-    }),
-    z.object({
-      name: z.literal("Cultural Fit"),
-      score: z.number(),
-      comment: z.string(),
-    }),
-    z.object({
-      name: z.literal("Confidence and Clarity"),
-      score: z.number(),
-      comment: z.string(),
-    }),
-  ]),
-  strengths: z.array(z.string()),
-  areasForImprovement: z.array(z.string()),
-  finalAssessment: z.string(),
-});
+// export const feedbackSchema = z.object({
+//   totalScore: z.number(),
+//   categoryScores: z.tuple([
+//     z.object({
+//       name: z.literal("Communication Skills"),
+//       score: z.number(),
+//       comment: z.string(),
+//     }),
+//     z.object({
+//       name: z.literal("Technical Knowledge"),
+//       score: z.number(),
+//       comment: z.string(),
+//     }),
+//     z.object({
+//       name: z.literal("Problem Solving"),
+//       score: z.number(),
+//       comment: z.string(),
+//     }),
+//     z.object({
+//       name: z.literal("Cultural Fit"),
+//       score: z.number(),
+//       comment: z.string(),
+//     }),
+//     z.object({
+//       name: z.literal("Confidence and Clarity"),
+//       score: z.number(),
+//       comment: z.string(),
+//     }),
+//   ]),
+//   strengths: z.array(z.string()),
+//   areasForImprovement: z.array(z.string()),
+//   finalAssessment: z.string(),
+// });
 
+
+export const feedbackSchema = z.object({
+    totalScore: z.number().min(0).max(100),
+    categoryScores: z.object({
+        communicationSkills: z.number().min(0).max(100),
+        technicalKnowledge: z.number().min(0).max(100),
+        problemSolving: z.number().min(0).max(100),
+        culturalFit: z.number().min(0).max(100),
+        confidenceClarity: z.number().min(0).max(100),
+    }),
+    strengths: z.string(), // ✅ Changed from array to string
+    areasForImprovement: z.string(), // ✅ Changed from array to string
+    finalAssessment: z.string(),
+});
 export const interviewCovers = [
   "/adobe.png",
   "/amazon.png",
