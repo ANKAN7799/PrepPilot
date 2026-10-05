@@ -119,10 +119,10 @@ const Agent = ({userName, userId, type, interviewId, questions}:AgentProps) => {
 
         if (type === "generate") {
             await vapi.start(
-                undefined,
-                undefined,
-                undefined,
-                process.env.NEXT_PUBLIC_VAPI_WORKFLOW_ID!,
+                // undefined,
+                // undefined,
+                // undefined,
+                process.env.NEXT_PUBLIC_VAPI_ASSISTANT_ID!,
                 {
                     variableValues: {
                         username: userName,
